@@ -19,21 +19,18 @@ export const goods = [
 export const App = () => {
   const defaultGood = goods.find(good => good === 'Jam');
   const [value, setValue] = useState(defaultGood);
-  const [notSelected, setNotSelected] = useState(false);
 
   const handleSelection = good => {
     if (value === good) {
       setValue();
-      setNotSelected(true);
     } else {
       setValue(good);
-      setNotSelected(false);
     }
   };
 
   return (
     <main className="section container">
-      {notSelected ? (
+      {!value ? (
         <h1 className="title is-flex is-align-items-center">
           No goods selected
         </h1>
@@ -46,7 +43,6 @@ export const App = () => {
             className="delete ml-3"
             onClick={() => {
               setValue();
-              setNotSelected(true);
             }}
           />
         </h1>
@@ -57,6 +53,7 @@ export const App = () => {
           {goods.map(good => (
             <tr
               data-cy="Good"
+              key={good}
               className={classNames({
                 'has-background-success-light': good === value,
               })}
